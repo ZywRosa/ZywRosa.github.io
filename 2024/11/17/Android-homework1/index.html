@@ -33,7 +33,7 @@
 <meta property="og:image" content="file:///D:/git-code/Blog/source/_posts/Android-homework1/p1.png">
 <meta property="og:image" content="d:\git-code\Blog\source_posts\Android-homework1\framlayout.png">
 <meta property="article:published_time" content="2024-11-17T09:21:30.000Z">
-<meta property="article:modified_time" content="2024-11-18T02:48:29.835Z">
+<meta property="article:modified_time" content="2024-11-18T03:20:31.038Z">
 <meta property="article:author" content="Rosa">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="d:\git-code\Blog\source_posts\Android-homework1\main.gif">
@@ -186,7 +186,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-11-18 10:48:29" itemprop="dateModified" datetime="2024-11-18T10:48:29+08:00">2024-11-18</time>
+                <time title="修改时间：2024-11-18 11:20:31" itemprop="dateModified" datetime="2024-11-18T11:20:31+08:00">2024-11-18</time>
               </span>
 
           
@@ -226,68 +226,18 @@
 <p>.xml的布局类似下图：</p>
 <p><img src="D:\git-code\Blog\source_posts\Android-homework1\framlayout.png" alt="image"></p>
 <p>最后将顶部和底部文件压入一个activity_main_fragment.xml文件中，中间添加一个 <code>frameLayout</code>作为 Fragment 容器</p>
-<h4 id="2-Tab-栏跳转"><a href="#2-Tab-栏跳转" class="headerlink" title="2.Tab 栏跳转"></a>2.Tab 栏跳转</h4><ol>
-<li>通过transaction添加fragment到frameLayout，不同的fragment给不同的tag，便于后续监听跳转不同的相应页面。</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Manager = getSupportFragmentManager();</span><br><span class="line">FragmentTransaction transaction = Manager.beginTransaction();</span><br><span class="line">        transaction.add(R.id.framelayout, fragment1, &quot;tag1&quot;);</span><br><span class="line">        transaction.add(R.id.framelayout, fragment2, &quot;tag2&quot;);</span><br><span class="line">        transaction.add(R.id.framelayout, fragment3, &quot;tag3&quot;);</span><br><span class="line">        transaction.add(R.id.framelayout, fragment4, &quot;tag4&quot;);</span><br></pre></td></tr></table></figure>
+<h4 id="2-Tab-栏跳转"><a href="#2-Tab-栏跳转" class="headerlink" title="2.Tab 栏跳转"></a>2.Tab 栏跳转</h4><p>2.1通过transaction添加fragment到frameLayout，不同的fragment给不同的tag，便于后续监听跳转不同的相应页面。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">        Manager = getSupportFragmentManager();</span><br><span class="line">        FragmentTransaction transaction = Manager.beginTransaction();</span><br><span class="line">transaction.add(R.id.framelayout, fragment1, &quot;tag1&quot;);</span><br><span class="line">transaction.add(R.id.framelayout, fragment2, &quot;tag2&quot;);</span><br><span class="line">transaction.add(R.id.framelayout, fragment3, &quot;tag3&quot;);</span><br><span class="line">transaction.add(R.id.framelayout, fragment4, &quot;tag4&quot;);</span><br></pre></td></tr></table></figure>
 
-<ol>
-<li><p>切换</p>
-</li>
-<li><p><strong>布局结构</strong>：</p>
-<p><strong>顶部</strong>：我的微信（layout_top.xml）</p>
-<p><strong>中部</strong>：主要内容显示区域（4个Fragment 容器）</p>
-<p><strong>底部</strong>：Tab 栏（包含聊天、联系人、发现、我的四个 Tab）(layout_bottom.xml)</p>
-<p>将顶部、Fragment和底部文件压入一个activity_main_fragment.xml文件中</p>
-</li>
-<li><p><strong>UI 组件</strong>：</p>
-<ul>
-<li>使用 &#96;&#96;LinearLayout&#96; 来组织整体布局。</li>
-<li>顶部状态栏通过 <code>Toolbar</code> 或者直接使用系统状态栏。</li>
-<li>中部内容区域使用 <code>FrameLayout</code> 作为 Fragment 容器。</li>
-<li>底部 Tab 栏使用 <code>BottomView</code>。</li>
-</ul>
-</li>
-<li><p><strong>Fragment</strong>：</p>
-<ul>
-<li>创建四个 Fragment 分别对应聊天、联系人、发现、我的四个界面。</li>
-<li>聊天 Fragment 需要进一步实现列表效果（使用 RecyclerView）。</li>
-</ul>
-</li>
-<li><p><strong>Tab 栏跳转</strong>：</p>
-<ul>
-<li>使用 <code>BottomNavigationView.OnNavigationItemSelectedListener</code> 监听 Tab 的点击事件，根据点击的 Tab 切换相应的 Fragment。</li>
-</ul>
-</li>
-</ol>
-<h4 id="2-完善-RecyclerView-并添加点击效果"><a href="#2-完善-RecyclerView-并添加点击效果" class="headerlink" title="2.完善 RecyclerView 并添加点击效果"></a>2.完善 RecyclerView 并添加点击效果</h4><ol>
-<li><strong>数据绑定</strong>：<ul>
-<li>使用 <code>ViewModel</code> 和 <code>LiveData</code> 或者 <code>Data Binding</code> 库进行数据绑定。</li>
-<li>定义数据模型类（例如 <code>ChatItem</code>），包含列表项所需的数据。</li>
-</ul>
-</li>
-<li><strong>列表创建</strong>：<ul>
-<li>在聊天 Fragment 中使用 <code>RecyclerView</code> 显示列表。</li>
-<li>定义一个 <code>RecyclerView.Adapter</code>（例如 <code>ChatAdapter</code>），并绑定数据模型。</li>
-</ul>
-</li>
-<li><strong>Adapter 使用</strong>：<ul>
-<li>在 <code>ChatAdapter</code> 中重写 <code>onBindViewHolder</code> 方法，将数据绑定到 <code>ViewHolder</code> 的视图上。</li>
-<li>为 <code>ViewHolder</code> 设置点击事件监听器，通过接口回调将点击事件传递给 Fragment。</li>
-</ul>
-</li>
-<li><strong>点击效果</strong>：<ul>
-<li>在 <code>ViewHolder</code> 的点击事件中，使用 <code>RippleDrawable</code> 或者 <code>Selector</code> 来实现点击水波效果。</li>
-<li>也可以在点击时改变背景颜色，实现简单的点击效果。</li>
-</ul>
-</li>
-<li><strong>跳转到详情页面</strong>：<ul>
-<li>在点击事件中，使用 <code>Intent</code> 跳转到详情页面。</li>
-<li>传递必要的数据（例如点击项的 ID 或详细信息）给详情页面。</li>
-</ul>
-</li>
-</ol>
-<h4 id="3-处理返回操作"><a href="#3-处理返回操作" class="headerlink" title="3.处理返回操作"></a>3.处理返回操作</h4><ol>
+<p>2.2通过判断tag，切换显示的fragment页面</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">private void replaceFragment(String tag) &#123;</span><br><span class="line">    FragmentTransaction transaction = Manager.beginTransaction();</span><br><span class="line">    if (currentFragment != null) &#123;</span><br><span class="line">        transaction.hide(currentFragment);</span><br><span class="line">    &#125;</span><br><span class="line">    currentFragment = Manager.findFragmentByTag(tag);</span><br><span class="line">    if (currentFragment != null) &#123;</span><br><span class="line">        int containerId = getContainerIdForTag(tag);</span><br><span class="line">        transaction.show(currentFragment);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        // 找不到</span><br><span class="line">    &#125;</span><br><span class="line">    transaction.commit();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private int getContainerIdForTag(String tag) &#123;</span><br><span class="line">    switch (tag) &#123;</span><br><span class="line">        case &quot;tag1&quot;:</span><br><span class="line">            return R.id.framelayout1;</span><br><span class="line">        case &quot;tag2&quot;:</span><br><span class="line">            return R.id.framelayout2;</span><br><span class="line">        case &quot;tag3&quot;:</span><br><span class="line">            return R.id.framelayout3;</span><br><span class="line">        case &quot;tag4&quot;:</span><br><span class="line">            return R.id.framelayout4;</span><br><span class="line">        default:</span><br><span class="line">            throw new IllegalArgumentException(&quot;Unknown tag: &quot; + tag);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>2.3初始仅显示fragment1（初始化），对底部的4个layout设置监听，当点击不同的layout时，切换到相应tag的fragmnet页面</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">        transaction.hide(fragment2);</span><br><span class="line">transaction.hide(fragment3);</span><br><span class="line">transaction.hide(fragment4);</span><br><span class="line">transaction.commit();</span><br><span class="line"></span><br><span class="line">currentFragment = fragment1;</span><br><span class="line"></span><br><span class="line">setListeners();</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">private void setListeners() &#123;</span><br><span class="line">    layout1.setOnClickListener(v -&gt; replaceFragment(&quot;tag1&quot;));</span><br><span class="line">    layout2.setOnClickListener(v -&gt; replaceFragment(&quot;tag2&quot;));</span><br><span class="line">    layout3.setOnClickListener(v -&gt; replaceFragment(&quot;tag3&quot;));</span><br><span class="line">    layout4.setOnClickListener(v -&gt; replaceFragment(&quot;tag4&quot;));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-完善-RecyclerView-并添加点击效果，RecyclerView的使用"><a href="#2-完善-RecyclerView-并添加点击效果，RecyclerView的使用" class="headerlink" title="2.完善 RecyclerView 并添加点击效果，RecyclerView的使用"></a>2.完善 RecyclerView 并添加点击效果，RecyclerView的使用</h4><h4 id="3-处理返回操作"><a href="#3-处理返回操作" class="headerlink" title="3.处理返回操作"></a>3.处理返回操作</h4><ol>
 <li><strong>Activity 栈管理</strong>：<ul>
 <li>使用 <code>startActivityForResult</code> 和 <code>onActivityResult</code> 方法（适用于 Android 11 及以下）。</li>
 <li>或者使用 <code>ActivityResultContracts</code> 和 <code>ActivityResultLauncher</code>（适用于 Android 12 及以上）。</li>
@@ -411,7 +361,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Android%E5%BC%80%E5%8F%91-%E7%B1%BB%E5%BE%AE%E4%BF%A1%E7%95%8C%E9%9D%A2%E7%9A%84%E8%AE%BE%E8%AE%A1"><span class="nav-number">1.</span> <span class="nav-text">Android开发-类微信界面的设计</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81-%E5%AE%9E%E7%8E%B0%E6%95%88%E6%9E%9C%E5%9B%BE"><span class="nav-number">1.1.</span> <span class="nav-text">一、 实现效果图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%8A%9F%E8%83%BD%E8%AF%B4%E6%98%8E"><span class="nav-number">1.2.</span> <span class="nav-text">二、功能说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%8A%9F%E8%83%BD%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.3.</span> <span class="nav-text">三、功能实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E8%AE%BE%E8%AE%A1%E7%B1%BB%E5%BE%AE%E4%BF%A1%E4%B8%BB%E7%95%8C%E9%9D%A2UI"><span class="nav-number">1.3.0.1.</span> <span class="nav-text">1.设计类微信主界面UI</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-Tab-%E6%A0%8F%E8%B7%B3%E8%BD%AC"><span class="nav-number">1.3.0.2.</span> <span class="nav-text">2.Tab 栏跳转</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E5%AE%8C%E5%96%84-RecyclerView-%E5%B9%B6%E6%B7%BB%E5%8A%A0%E7%82%B9%E5%87%BB%E6%95%88%E6%9E%9C"><span class="nav-number">1.3.0.3.</span> <span class="nav-text">2.完善 RecyclerView 并添加点击效果</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E5%A4%84%E7%90%86%E8%BF%94%E5%9B%9E%E6%93%8D%E4%BD%9C"><span class="nav-number">1.3.0.4.</span> <span class="nav-text">3.处理返回操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E5%AE%9E%E7%8E%B0%E6%AD%A5%E9%AA%A4"><span class="nav-number">1.3.0.5.</span> <span class="nav-text">4.实现步骤</span></a></li></ol></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Android%E5%BC%80%E5%8F%91-%E7%B1%BB%E5%BE%AE%E4%BF%A1%E7%95%8C%E9%9D%A2%E7%9A%84%E8%AE%BE%E8%AE%A1"><span class="nav-number">1.</span> <span class="nav-text">Android开发-类微信界面的设计</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81-%E5%AE%9E%E7%8E%B0%E6%95%88%E6%9E%9C%E5%9B%BE"><span class="nav-number">1.1.</span> <span class="nav-text">一、 实现效果图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%8A%9F%E8%83%BD%E8%AF%B4%E6%98%8E"><span class="nav-number">1.2.</span> <span class="nav-text">二、功能说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%8A%9F%E8%83%BD%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.3.</span> <span class="nav-text">三、功能实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E8%AE%BE%E8%AE%A1%E7%B1%BB%E5%BE%AE%E4%BF%A1%E4%B8%BB%E7%95%8C%E9%9D%A2UI"><span class="nav-number">1.3.0.1.</span> <span class="nav-text">1.设计类微信主界面UI</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-Tab-%E6%A0%8F%E8%B7%B3%E8%BD%AC"><span class="nav-number">1.3.0.2.</span> <span class="nav-text">2.Tab 栏跳转</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E5%AE%8C%E5%96%84-RecyclerView-%E5%B9%B6%E6%B7%BB%E5%8A%A0%E7%82%B9%E5%87%BB%E6%95%88%E6%9E%9C%EF%BC%8CRecyclerView%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">1.3.0.3.</span> <span class="nav-text">2.完善 RecyclerView 并添加点击效果，RecyclerView的使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E5%A4%84%E7%90%86%E8%BF%94%E5%9B%9E%E6%93%8D%E4%BD%9C"><span class="nav-number">1.3.0.4.</span> <span class="nav-text">3.处理返回操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E5%AE%9E%E7%8E%B0%E6%AD%A5%E9%AA%A4"><span class="nav-number">1.3.0.5.</span> <span class="nav-text">4.实现步骤</span></a></li></ol></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
